@@ -1,0 +1,73 @@
+1: A void pointer can be converted to any other pointer type. By returning a
+   void pointer, operator new doesn't need to be concerned with what type of object
+   you are allocating memory for; it just needs the size to allocate. Similarly,
+   by taking a void *, operator delete can accept a pointer of any type as an 
+   argument. DRY
+
+2: - a pointer, p, to a double is created and a double is allocated on the heap
+   - a pointer, q, to a Foo is created and a Foo is allocated on the heap
+     Foo has one data member: a char array of size 4000
+     Foo's operator new is called, which allocates a char array of size 4000
+     and produces the line of output: "new(4000) returns [address]"
+   - a pointer, r, to a Foo is created and the previous sequence happens again
+   - delete is called for p, a double *, so it gets deleted by the global delete
+   - delete is called for q, a Foo *, so Foo's delete is called
+     this produces the line of output: "delete([address], 4000)"
+     p is then cast to a char *, so that you can invoke global delete[]
+   - delete is called for r, a Foo *, and the previous sequence happens again
+
+   Operator new and operator delete are declared static because they are 
+   functions that are not bound to any instance of Foo. I believe that these
+   allocation functions will be static whether the static keyword is used or not. 
+
+3: forbid1.cc does not compile. operator new is private and is being invoked from
+   outside the class in main().
+
+4: forbid2.cc does not compile. operator new has been marked "=delete" which
+   effectively disallows its invocation.
+
+5: The mixin constructor and destructors are marked protected so that they can
+   be invoked by the derived class only. They become private members of the 
+   derived class in this case because of public inheritance.
+
+6: I suppose you could create an array and for each call to new, add the pointer
+   value to the array. Then for each call to delete, verify that the pointer
+   is in the array, remove it, and free the memory. If it isn't, just return. 
+
+7: I would choose to pass the integer 255 via memset. I believe this is the max
+   value that can be stored in an unsigned char. It sets all of the bits to 1
+   and I can't think of a way to be more disruptive than that.
+
+8: Foo is 8 bytes
+   The difference in values between p and q is 32 bytes.
+   This space is enough for the object and the overhead associated with its memory
+   allocation.
+
+   Bar is 8 bytes.
+   The difference in values between r and s is 8 bytes.
+   pool.cc also uses a union to define Node. This means that all of the members of Node
+   share the same memory location. The size of a Node is 8 bytes (one char array
+   that is the size of a Bar, which is 8 bytes). 
+
+9: Bar would inherit the redefined new and delete if they were defined as
+   class members of Foo. If Bar did not override new and delete, then the implementation
+   specified in Foo would not be allocating / deallocating enough memory if 
+   sizeof(Bar) were greater than sizeof(Foo).
+   I would fix this problem by overriding operators new and delete in the derived class.
+
+10: normal.cc:	0.36s
+    pool.cc:	0.09s
+
+    normal.cc uses 4 times as much time as pool.cc
+
+    For many of the calls to new in pool.cc, we are not allocating additional memory,
+    nor are we iterating through freelist. We are simply returning the next node from 
+    the freelist linked list. Only when the list is empty do we have to allocate 
+    additional memory and iterate through the entire list.
+
+11: normal.cc:	315'824
+    pool.cc:	81'452
+
+    normal.cc uses nearly 4 (3.878) times as much space as pool.cc
+
+    pool.cc incurs much less space overhead by reducing the number of invokations of new.
