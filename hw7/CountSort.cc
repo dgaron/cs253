@@ -1,3 +1,6 @@
+#include <string> // to_string
+#include <stdexcept> // exceptions
+
 #include "CountSort.h"
 
 using namespace std;
@@ -54,7 +57,7 @@ int CountSort::operator [](int n) const {
         throw out_of_range(to_string(n) + " is outside of the acceptable range [0" +
                         "-" + to_string(size_ - 1) + "] for object of size " + to_string(size_));
     }
-    iterator it = begin();
+    Iterator it = begin();
     for (int i = 0; i < n; ++i) {
         ++it;
     }
@@ -115,14 +118,57 @@ void CountSort::clear() {
     size_ = 0;
 }
 
-// Return a CountSort::iterator that corresponds to the smallest int stored
-CountSort::iterator CountSort::begin() const {
-    return iterator(*this);
+// Return a CountSort::Iterator that corresponds to the smallest int stored
+CountSort::Iterator CountSort::begin() const {
+    return CountSort::Iterator(this);
 }
-// Return a CountSort::iterator that corresponds one past the largest int stored
-CountSort::iterator CountSort::end() const {
-    return iterator(*this, range);
+// Return a CountSort::Iterator that corresponds one past the largest int stored
+CountSort::Iterator CountSort::end() const {
+    return CountSort::Iterator(this, range);
 }
 
+// Iterator implementation
+
+// Constructor
+CountSort::Iterator::Iterator(const CountSort *p, int ai) : parent(p), array_index(ai) {
+    while (array_index < parent->range && !parent->numbers[array_index]) {
+        ++array_index;
+    }
+}
+
+// Preincrement
+CountSort::Iterator &CountSort::Iterator::operator ++() {
+    if (element_index < parent->numbers[array_index]) {
+        ++element_index;
+        return *this;
+    }
+    if (array_index >= parent->range) {
+        throw std::out_of_range("Attempt to increment Iterator past end()");
+    }
+    do {
+        ++array_index;
+    } while (array_index < parent->range && !parent->numbers[array_index]);
+    element_index = 1;
+    return *this;
+}
+// Postincrement
+CountSort::Iterator CountSort::Iterator::operator ++(int) {
+    const auto save = *this;
+    ++*this;
+    return save;
+}
+// Operator *
+int CountSort::Iterator::operator *() const {
+    return array_index + parent->lower_bound;
+}
+// Operator ==
+bool CountSort::Iterator::operator ==(const CountSort::Iterator &rhs) const {
+    return parent == rhs.parent && array_index == rhs.array_index &&
+            element_index == rhs.element_index;
+}
+// Operator != 
+bool CountSort::Iterator::operator !=(const CountSort::Iterator &rhs) const {
+    return !(*this == rhs);
+}
 
 
