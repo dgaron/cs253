@@ -120,11 +120,11 @@ void CountSort::clear() {
 
 // Return a CountSort::Iterator that corresponds to the smallest int stored
 CountSort::Iterator CountSort::begin() const {
-    return CountSort::Iterator(this);
+    return Iterator(this);
 }
 // Return a CountSort::Iterator that corresponds one past the largest int stored
 CountSort::Iterator CountSort::end() const {
-    return CountSort::Iterator(this, range);
+    return Iterator(this, range);
 }
 
 // Iterator implementation
