@@ -120,39 +120,34 @@ void CountSort::clear() {
 
 // Return a CountSort::Iterator that corresponds to the smallest int stored
 CountSort::Iterator CountSort::begin() const {
-    return Iterator(*this);
+    return Iterator(this);
 }
 // Return a CountSort::Iterator that corresponds one past the largest int stored
 CountSort::Iterator CountSort::end() const {
-    return Iterator(*this, range);
+    return Iterator(this, range);
 }
 
 // Iterator implementation
 
 // Constructor
-CountSort::Iterator::Iterator(const CountSort &p, int ai) : parent(p), array_index(ai) {
-    while (array_index < parent.range && !parent.numbers[array_index]) {
+CountSort::Iterator::Iterator(const CountSort *p, int ai) : parent(p), array_index(ai) {
+    while (array_index < parent->range && !parent->numbers[array_index]) {
         ++array_index;
     }
-}
-
-// Copy Assignment Operator
-CountSort::Iterator CountSort::Iterator::operator =(const Iterator &rhs) {
-    return Iterator(rhs.parent);
 }
 
 // Preincrement
 CountSort::Iterator &CountSort::Iterator::operator ++() {
-    if (element_index < parent.numbers[array_index]) {
+    if (element_index < parent->numbers[array_index]) {
         ++element_index;
         return *this;
     }
-    if (array_index >= parent.range) {
+    if (array_index >= parent->range) {
         throw std::out_of_range("Attempt to increment Iterator past end()");
     }
     do {
         ++array_index;
-    } while (array_index < parent.range && !parent.numbers[array_index]);
+    } while (array_index < parent->range && !parent->numbers[array_index]);
     element_index = 1;
     return *this;
 }
@@ -164,7 +159,7 @@ CountSort::Iterator CountSort::Iterator::operator ++(int) {
 }
 // Operator *
 int CountSort::Iterator::operator *() const {
-    return array_index + parent.lower_bound;
+    return array_index + parent->lower_bound;
 }
 // Operator ==
 bool CountSort::Iterator::operator ==(const CountSort::Iterator &rhs) const {

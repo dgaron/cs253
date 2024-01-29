@@ -15,16 +15,16 @@ class CountSort {
   public:
     class Iterator {
       private:
-        const CountSort &parent;
+        const CountSort *parent; // Pointer to const CountSort not const pointer
         int array_index;
         int element_index = 1;
       public:
         // Constructor
-        Iterator(const CountSort &p, int ai = 0);
+        Iterator(const CountSort *p, int ai = 0);
         // Copy constructor
         Iterator(const Iterator &rhs) = default;
         // Copy assignment operator
-        Iterator operator =(const Iterator &rhs);
+        Iterator &operator =(const Iterator &rhs) = default;
         // Destructor
         ~Iterator() = default;
 
