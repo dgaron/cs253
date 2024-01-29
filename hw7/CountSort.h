@@ -15,7 +15,7 @@ class CountSort {
   public:
     class Iterator {
       private:
-        const CountSort &parent; // Pointer to a const CountSort not a const pointer
+        const CountSort &parent;
         int array_index;
         int element_index = 1;
       public:
