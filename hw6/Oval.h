@@ -17,7 +17,7 @@ class Oval {
     template <typename I>
     Oval(I, I);
     // Assignment operator
-    Oval &operator =(const Oval<T, P, C> &);
+    Oval &operator =(const Oval &);
     // Destructor -- use default
     ~Oval() = default;
 
