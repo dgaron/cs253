@@ -90,7 +90,7 @@ int main() {
     cout << "o1[0] should be 5 now: " << o1[0] << '\n';
 
     // Test copy constructor
-    const Oval<int> o2(o1);
+    const Oval o2(o1);
 
     // Test const operator[]
     cout << "o2[3] should be 3: " << o2[3] << '\n';
@@ -109,7 +109,7 @@ int main() {
     Oval<int, 5> o3(v1.begin(), v1.end());
 
     // Test assignment operator
-    Oval<int, 5> o4;
+    Oval<int, 4> o4;
     o4 = o1;
 
     const vector<int> v2 = o4.getData();

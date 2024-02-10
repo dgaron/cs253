@@ -12,10 +12,7 @@ class Oval {
     // Default constructor -- use default
     Oval() = default;
     // Copy constructor
-    // Templated member allows the declaration of an Oval object  size and/or 
-    // comparison functor different from that of the copied object
-    template <int P_RHS, typename C_RHS> 
-    Oval(const Oval<T, P_RHS, C_RHS> &);
+    Oval(const Oval &);
     // iterator-iterator constructor
     template <typename I>
     Oval(I, I);
@@ -54,8 +51,7 @@ class Oval {
 
 // Copy constructor
 template <typename T, int P, typename C>
-template <int P_RHS, typename C_RHS>
-Oval<T, P, C>::Oval(const Oval<T, P_RHS, C_RHS> &rhs) : data(rhs.getData()) { 
+Oval<T, P, C>::Oval(const Oval<T, P, C> &rhs) : data(rhs.getData()) { 
 }
 
 // iterator - iterator constructor
