@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <cassert>  // assert()
-#include <vector>
 #include "CountSort.h"
 
 using namespace std;
