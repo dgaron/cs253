@@ -1,2 +1,23 @@
-### STOP
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
+# Mac garbage
 .DS_Store
+
+# CMake stuff
+*[Cc][Mm]ake*
+
+# Except CMakeLists.txt
+!CMakeLists.txt
+
+# Static libraries
+*.a
+
+# Makefiles
+Makefile
