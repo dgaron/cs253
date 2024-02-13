@@ -87,15 +87,21 @@ void test_size() {
     cout << "------------------------------------------------------------------------\n";
 }
 
-void test_clear() {
-    cout << "Testing clear()" << '\n';
+void test_clear_empty() {
+    cout << "Testing clear() & empty()" << '\n';
     cout << "clear() empties the container" << '\n';
+    cout << "empty() returns true iff there are no values in the container" << '\n';
     CountSort cs(0, 99);
     cs = {10, 10, 10};
+    assert(cs.empty() == false);
     assert(cs.size() == 3);
+    cout << "Before clear(), size() expected return: 3 -- actual: " << cs.size() << '\n';
+    cout << "Before clear(), empty() expected return: false -- actual: " << boolalpha << cs.empty() << '\n';
     cs.clear();
     assert(cs.size() == 0);
+    assert(cs.empty() == true);
     cout << "After clear(), size() expected return: 0 -- actual: " << cs.size() << '\n';
+    cout << "After clear(), empty() expected return: true -- actual: " << cs.empty() << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
@@ -414,7 +420,7 @@ int main() {
     test_min_max();
     test_width();
     test_size();
-    test_clear();
+    test_clear_empty();
     test_assignment_operator_cs();
     test_assignment_operator_il();
     test_il_constructor();
