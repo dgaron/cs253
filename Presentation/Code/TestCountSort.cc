@@ -257,7 +257,13 @@ void test_for_each_loop() {
     CountSort cs = {1, 1, 1, 3, 3, 3, 99};
     cout << "for (auto n : cs) { cout << n; } // basically" << '\n';
     cout << "Expected: 1, 1, 1, 3, 3, 3, 99" << '\n';
-    cout << "Actual:   " << cs << '\n';
+    cout << "Actual:   ";
+    string sep = "";
+    for (auto n : cs) {
+        cout << sep << n;
+        sep = ", ";
+    }
+    cout << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
