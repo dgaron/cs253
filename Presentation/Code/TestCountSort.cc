@@ -46,8 +46,8 @@ void test_copy_constructor() {
     // CountSort cs2(cs1);
     CountSort cs2 = cs1;
     cout << "Successfully copied CountSort object:" << '\n';
-    cout << "cs1:   {" << cs1 << '}' << '\n';
-    cout << "cs2:   {" << cs2 << '}' << '\n';
+    cout << "cs1: " << cs1  << '\n';
+    cout << "cs2: " << cs2  << '\n';
     assert(cs1.size() == cs2.size());
     cout << "cs1.size() expected return: 3 -- actual: " << cs1.size() << '\n';
     cout << "cs2.size() expected return: 3 -- actual: " << cs2.size() << '\n';
@@ -116,8 +116,8 @@ void test_assignment_operator_cs() {
     cs2 = {10, 10, 10};
     cs1 = cs2;
     cout << "Successfully assigned CountSort object to CountSort object with same bounds:" << '\n';
-    cout << "cs1:   {" << cs1 << '}' << '\n';
-    cout << "cs2:   {" << cs2 << '}' << '\n';
+    cout << "cs1: " << cs1 << '\n';
+    cout << "cs2: " << cs2 << '\n';
     assert(cs1.size() == cs2.size());
     cout << "cs1.size() expected return: 3 -- actual: " << cs1.size() << '\n';
     cout << "cs2.size() expected return: 3 -- actual: " << cs2.size() << '\n';
@@ -138,8 +138,8 @@ void test_assignment_operator_il() {
     cout << '\n';
     cs = {0, 1, 2, 2, 99};
     cout << "Successfully assigned std::initializer_list<int> to CountSort object" << '\n';
-    cout << "Expected: {0, 1, 2, 2, 99}" << '\n';
-    cout << "Actual:   {" << cs << '}' << '\n';
+    cout << "Expected: 0, 1, 2, 2, 99" << '\n';
+    cout << "Actual:   " << cs << '\n';
     assert(cs.size() == 5);
     cout << "cs.size() expected return: 5 -- actual: " << cs.size() << '\n';
     cout << "------------------------------------------------------------------------\n";
@@ -150,8 +150,8 @@ void test_il_constructor() {
     cout << "Constructor implemented for std::initializer_list<int>" << '\n';
     CountSort cs = {0, 1, 2, 2, 99};
     cout << "Successfully constructed CountSort object from std::initializer_list<int>" << '\n';
-    cout << "Expected: {0, 1, 2, 2, 99}" << '\n';
-    cout << "Actual:   {" << cs << '}' << '\n';
+    cout << "Expected: 0, 1, 2, 2, 99" << '\n';
+    cout << "Actual:   " << cs << '\n';
     assert(cs.size() == 5);
     cout << "cs.size() expected return: 5 -- actual: " << cs.size() << '\n';
     cout << "------------------------------------------------------------------------\n";
@@ -256,8 +256,8 @@ void test_for_each_loop() {
     cout << "Testing for each loop" << '\n';
     CountSort cs = {1, 1, 1, 3, 3, 3, 99};
     cout << "for (auto n : cs) { cout << n; } // basically" << '\n';
-    cout << "Expected: {1, 1, 1, 3, 3, 3, 99}" << '\n';
-    cout << "Actual:   {" << cs << '}' << '\n';
+    cout << "Expected: 1, 1, 1, 3, 3, 3, 99" << '\n';
+    cout << "Actual:   " << cs << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
