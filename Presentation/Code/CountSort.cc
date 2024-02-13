@@ -3,6 +3,7 @@
 #include <initializer_list> // std::initializer_list
 #include <algorithm>    // std::min(), std::max(), std::fill(), std::copy()
 #include <iterator>     // std::advance()
+#include <ostream>      // std::ostream
 #include "CountSort.h"
 
 CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(ub - lb + 1) {
@@ -261,4 +262,13 @@ bool operator<(const CountSort::Iterator &lhs, const CountSort::Iterator &rhs) {
 
 bool operator<=(const CountSort::Iterator &lhs, const CountSort::Iterator &rhs) {
     return !(lhs > rhs);
+}
+
+std::ostream &operator<<(std::ostream &os, const CountSort &cs) {
+    std::string sep = "";
+    for (auto n : cs) {
+        os << sep << std::to_string(n);
+        sep = ", ";
+    }
+    return os;
 }

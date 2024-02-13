@@ -83,4 +83,6 @@ class CountSort {
     void check_range_(int, int, int) const;
 };
 
+std::ostream& operator<<(std::ostream &, const CountSort &);
+
 #endif // COUNTSORT_H
