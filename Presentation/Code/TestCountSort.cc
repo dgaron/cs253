@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <cassert>  // assert()
-#include <ios>      // boolalpha
 #include "CountSort.h"
 
 using namespace std;
