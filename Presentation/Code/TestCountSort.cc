@@ -181,7 +181,7 @@ void test_call_operator() {
     cout << '\n';
     assert(cs(0) == 0);
     assert(cs(1) == 3);
-    cout << "cs(0) expected return: 0 -- actual: " << cs(1) << '\n';
+    cout << "cs(0) expected return: 0 -- actual: " << cs(0) << '\n';
     cout << "cs(1) expected return: 3 -- actual: " << cs(1) << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
