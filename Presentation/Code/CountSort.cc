@@ -59,18 +59,19 @@ void CountSort::check_range_(int n, int lower, int upper) const {
 
 unsigned int CountSort::calculate_width_(int lb, int ub) const {
     if (ub < lb) {
+        // Constructor throws in this case
         return 0;
     }
-    unsigned int width = 0;
-    if (__builtin_sub_overflow (ub, lb, &width)) {
-        std::string msg = "Error constructing range using lower bound: " + std::to_string(lb) + " and upper bound: " + std::to_string(ub);
+    if (ub == INT_MAX && lb == INT_MIN) {
+        std::string msg = "Error constructing range using lower bound: " + std::to_string(lb) + " and upper bound: " + std::to_string(ub) + '\n';
+        msg += "Width is limited to " + std::to_string(UINT_MAX);
         throw std::invalid_argument(msg);
     }
-    if (lb > INT_MIN) {
-        return width + 1;
-    }
-    std::string msg = "Range size is limited to [" + std::to_string(INT_MIN + 1) + " - " + std::to_string(INT_MAX) + ']';
-    throw std::invalid_argument(msg);
+    unsigned int width = 0;
+    __builtin_sub_overflow (ub, lb, &width);
+    // Alternative easier option. Unsure if there are any downsides.
+    // unsigned int width = abs(static_cast<long>(ub) - lb) + 1;
+    return width + 1;
 }
 
 

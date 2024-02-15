@@ -2,6 +2,7 @@
 #include <string>
 #include <cassert>  // assert()
 #include <limits>   // UINT_MAX, ULONG_MAX
+#include <cmath>    // abs()
 #include "CountSort.h"
 
 using namespace std;
