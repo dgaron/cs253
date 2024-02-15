@@ -60,7 +60,7 @@ void test_min_max() {
     cout << "Testing min()" << '\n';
     cout << "min() returns the lower bound" << '\n';
     assert(cs.min() == 0);
-    cout << "min() expected return: 0 -- actual:" << cs.min() << '\n';
+    cout << "min() expected return: 0 -- actual: " << cs.min() << '\n';
     cout << '\n';
     cout << "Testing max()" << '\n';
     cout << "max() returns the upper bound" << '\n';
