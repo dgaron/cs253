@@ -83,6 +83,7 @@ void test_calculate_width() {
     cout << "Testing CountSort calculate_width_ helper function" << '\n';
     cout << "calculate_width_() throws std::invalid_argument when upper bound - lower bound >= UINT_MAX" << '\n';
     cout << "Resulting width would overflow width_ type unsigned int" << '\n';
+    cout << '\n';
     try {
         CountSort cs(INT_MIN, INT_MAX);
     } catch (const invalid_argument &e) {
