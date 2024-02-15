@@ -6,7 +6,7 @@
 #include <ostream>      // std::ostream
 #include "CountSort.h"
 
-CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(ub - lb + 1) {
+CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(static_cast<long>(ub) - lb + 1) {
     if (upper_bound_ < lower_bound_) {
         std::string msg = "Invalid range: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
         throw std::invalid_argument(msg);
@@ -80,7 +80,7 @@ int CountSort::max() const {
     return upper_bound_;
 }
 
-unsigned int CountSort::width() const {
+long CountSort::width() const {
     return width_;
 }
 

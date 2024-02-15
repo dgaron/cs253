@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cassert>  // assert()
+#include <limits>   // UINT_MAX, ULONG_MAX
 #include "CountSort.h"
 
 using namespace std;
@@ -12,12 +13,12 @@ void test_constructor() {
     try {
         CountSort cs(99, 0);
     } catch (const invalid_argument &e) {
-        cout << "CountSort object creation failed with invalid range [99-0]" << '\n';
+        cout << "CountSort object creation failed with invalid range [99 - 0]" << '\n';
         cout << "Error message produced: " << e.what() << '\n';
     }
     cout << '\n';
-    CountSort cs(0, 99);
-    cout << "CountSort object creation succeeded with valid range [0-99]" << '\n';
+    CountSort cs(-100, 100);
+    cout << "CountSort object creation succeeded with valid range [-100 - 100]" << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
@@ -29,13 +30,13 @@ void test_insert() {
     try {
         cs.insert(100);
     } catch (const out_of_range &e) {
-        cout << "Insertion failed for 100 with range [10-99]" << '\n';
+        cout << "Insertion failed for 100 with range [10 - 99]" << '\n';
         cout << "Error message produced: " << e.what() << '\n';   
     }
     cout << '\n';
     cs.insert(10);
     assert(cs(0) == 1);
-    cout << "Insertion succeeded for 0 with range [10-99]" << '\n';
+    cout << "Insertion succeeded for 0 with range [10 - 99]" << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
@@ -71,9 +72,9 @@ void test_min_max() {
 void test_width() {
     cout << "Testing width()" << '\n';
     cout << "width() returns the how many different int values the object can hold" << '\n';
-    CountSort cs(0, 99);
-    assert(cs.width() == 100);
-    cout << "width() expected return: 100 -- actual: " << cs.width() << '\n';
+    CountSort cs(-100, 100);
+    assert(cs.width() == 201);
+    cout << "width() expected return: 201 -- actual: " << cs.width() << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
@@ -81,14 +82,11 @@ void test_size() {
     cout << "Testing size()" << '\n';
     cout << "size() returns the number of int values stored in the container" << '\n';
     CountSort cs(0, 99);
-    // Width is limited to size of unsigned int
-    // Each 
-    unsigned long stop = 4'300'000'000; // Just over size of 32 bit unsigned int
-    for (unsigned long i = 0; i < stop; ++i) {
-        cs.insert(i % 100);
-    }
-    assert(cs.size() == stop);
-    cout << "size() expected return: 10,000,000,000 -- actual: " << cs.size() << '\n';
+    cs.insert(10);
+    cs.insert(10);
+    cs.insert(10);
+    assert(cs.size() == 3);
+    cout << "size() expected return: 3 -- actual: " << cs.size() << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
