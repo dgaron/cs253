@@ -22,7 +22,7 @@ class CountSort {
 
     int min() const;
     int max() const;
-    long width() const;
+    unsigned int width() const;
     unsigned long size() const;
     bool empty() const;
     void insert(int);
@@ -78,9 +78,10 @@ class CountSort {
     unsigned int *numbers_;
     const int lower_bound_;
     const int upper_bound_;
-    const long width_;
+    const unsigned int width_;
     unsigned long size_ = 0;
     void check_range_(int, int, int) const;
+    unsigned int calculate_width_(int, int) const;
 };
 
 std::ostream& operator<<(std::ostream &, const CountSort &);

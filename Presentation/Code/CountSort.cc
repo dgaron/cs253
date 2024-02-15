@@ -4,9 +4,10 @@
 #include <algorithm>    // std::min(), std::max(), std::fill(), std::copy()
 #include <iterator>     // std::advance(), std::distance()
 #include <ostream>      // std::ostream
+#include <limits>       // INT_MIN, INT_MAX
 #include "CountSort.h"
 
-CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(static_cast<long>(ub) - lb + 1) {
+CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(calculate_width_(lb, ub)) {
     if (upper_bound_ < lower_bound_) {
         std::string msg = "Invalid range: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
         throw std::invalid_argument(msg);
@@ -56,6 +57,23 @@ void CountSort::check_range_(int n, int lower, int upper) const {
     }
 }
 
+unsigned int CountSort::calculate_width_(int lb, int ub) const {
+    if (ub < lb) {
+        return 0;
+    }
+    unsigned int width = 0;
+    if (__builtin_sub_overflow (ub, lb, &width)) {
+        std::string msg = "Error constructing range using lower bound: " + std::to_string(lb) + " and upper bound: " + std::to_string(ub);
+        throw std::invalid_argument(msg);
+    }
+    if (lb > INT_MIN) {
+        return width + 1;
+    }
+    std::string msg = "Range size is limited to [" + std::to_string(INT_MIN + 1) + " - " + std::to_string(INT_MAX) + ']';
+    throw std::invalid_argument(msg);
+}
+
+
 int CountSort::operator()(int n) const {
     check_range_(n, 0, width_ - 1);
     return numbers_[n];
@@ -80,7 +98,7 @@ int CountSort::max() const {
     return upper_bound_;
 }
 
-long CountSort::width() const {
+unsigned int CountSort::width() const {
     return width_;
 }
 

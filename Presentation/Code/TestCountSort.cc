@@ -55,7 +55,7 @@ void test_copy_constructor() {
     cout << "------------------------------------------------------------------------\n";
 }
 
-void test_min_max() {
+void test_get_min_max() {
     CountSort cs(0, 99);
     cout << "Testing min()" << '\n';
     cout << "min() returns the lower bound" << '\n';
@@ -69,7 +69,7 @@ void test_min_max() {
     cout << "------------------------------------------------------------------------\n";
 }
 
-void test_width() {
+void test_get_width() {
     cout << "Testing width()" << '\n';
     cout << "width() returns the how many different int values the object can hold" << '\n';
     CountSort cs(-100, 100);
@@ -78,7 +78,27 @@ void test_width() {
     cout << "------------------------------------------------------------------------\n";
 }
 
-void test_size() {
+void test_calculate_width() {
+    cout << "Testing CountSort calculate_width_ helper function" << '\n';
+    cout << "calculate_width_() throws std::invalid_argument when upper bound - lower bound >= UINT_MAX" << '\n';
+    cout << "Resulting width would overflow width_ type unsigned int" << '\n';
+    try {
+        CountSort cs(INT_MIN, INT_MAX);
+    } catch (const invalid_argument &e) {
+        long width = static_cast<long>(INT_MAX) - INT_MIN + 1;
+        cout << "CountSort object creation failed with invalid range [" << INT_MIN << " - " << INT_MAX << ']' << '\n';
+        cout << "Resulting width " << width << " would exceed UINT_MAX: " << UINT_MAX << '\n';
+        cout << "Error message produced: " <<  e.what() << '\n';
+    }
+    cout << '\n';
+    CountSort cs(INT_MIN + 1, INT_MAX);
+    cout << "CountSort object creation succeeded with valid range [" << (INT_MIN + 1) << " - " << INT_MAX << ']' << '\n';
+    assert(cs.width() == UINT_MAX);
+    cout << "width() expected return: " << UINT_MAX << " -- actual: " << cs.width() << '\n';
+    cout << "------------------------------------------------------------------------\n";
+}
+
+void test_get_size() {
     cout << "Testing size()" << '\n';
     cout << "size() returns the number of int values stored in the container" << '\n';
     CountSort cs(0, 99);
@@ -420,9 +440,10 @@ int main() {
     test_constructor();
     test_insert();
     test_copy_constructor();
-    test_min_max();
-    test_width();
-    test_size();
+    test_get_min_max();
+    test_get_width();
+    test_calculate_width();
+    test_get_size();
     test_clear_empty();
     test_assignment_operator_cs();
     test_assignment_operator_il();
