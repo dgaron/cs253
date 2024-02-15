@@ -18,12 +18,12 @@ class CountSort {
     ~CountSort();
 
     int operator()(int) const;
-    int operator[](int) const;
+    int operator[](unsigned int) const;
 
     int min() const;
     int max() const;
     unsigned int width() const;
-    unsigned int size() const;
+    unsigned long size() const;
     bool empty() const;
     void insert(int);
     void clear();
@@ -44,7 +44,7 @@ class CountSort {
         ~Iterator() = default;
 
         int operator*() const;
-        int operator[](difference_type) const;
+        int operator[](unsigned long) const;
 
         Iterator &operator++();
         Iterator operator++(int);
@@ -69,17 +69,17 @@ class CountSort {
       private:
         const CountSort *parent = nullptr;
         unsigned int integer_index = 0;
-        int current_integer_count = 1;
+        unsigned int current_integer_count = 1;
     };
 
     Iterator begin() const;
     Iterator end() const;
   private:
-    int *numbers_;
+    unsigned int *numbers_;
     const int lower_bound_;
     const int upper_bound_;
     const unsigned int width_;
-    unsigned int size_ = 0;
+    unsigned long size_ = 0;
     void check_range_(int, int, int) const;
 };
 

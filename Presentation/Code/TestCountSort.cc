@@ -24,18 +24,18 @@ void test_constructor() {
 void test_insert() {
     cout << "Testing insert()" << '\n';
     cout << "insert() throws std::out_of_range when n is outside of allowable range" << '\n';
-    CountSort cs(0, 99);
+    CountSort cs(10, 99);
     cout << '\n';
     try {
         cs.insert(100);
     } catch (const out_of_range &e) {
-        cout << "Insertion failed for 100 with range [0-99]" << '\n';
+        cout << "Insertion failed for 100 with range [10-99]" << '\n';
         cout << "Error message produced: " << e.what() << '\n';   
     }
     cout << '\n';
     cs.insert(10);
-    assert(cs(10) == 1);
-    cout << "Insertion succeeded for 10 with range [0-99]" << '\n';
+    assert(cs(0) == 1);
+    cout << "Insertion succeeded for 0 with range [10-99]" << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 
@@ -81,9 +81,14 @@ void test_size() {
     cout << "Testing size()" << '\n';
     cout << "size() returns the number of int values stored in the container" << '\n';
     CountSort cs(0, 99);
-    cs = {10, 10, 10};
-    assert(cs.size() == 3);
-    cout << "size() expected return: 3 -- actual: " << cs.size() << '\n';
+    // Width is limited to size of unsigned int
+    // Each 
+    unsigned long stop = 4'300'000'000; // Just over size of 32 bit unsigned int
+    for (unsigned long i = 0; i < stop; ++i) {
+        cs.insert(i % 100);
+    }
+    assert(cs.size() == stop);
+    cout << "size() expected return: 10,000,000,000 -- actual: " << cs.size() << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
 

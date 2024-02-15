@@ -2,7 +2,7 @@
 #include <string>       // std::string, std::to_string()
 #include <initializer_list> // std::initializer_list
 #include <algorithm>    // std::min(), std::max(), std::fill(), std::copy()
-#include <iterator>     // std::advance()
+#include <iterator>     // std::advance(), std::distance()
 #include <ostream>      // std::ostream
 #include "CountSort.h"
 
@@ -11,7 +11,7 @@ CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width
         std::string msg = "Invalid range: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
         throw std::invalid_argument(msg);
     }
-    numbers_ = new int[width_] {0};
+    numbers_ = new unsigned int[width_] {0};
 }
 
 CountSort::CountSort(const CountSort &rhs) : CountSort(rhs.min(), rhs.max()) {
@@ -61,7 +61,7 @@ int CountSort::operator()(int n) const {
     return numbers_[n];
 }
 
-int CountSort::operator[](int n) const {
+int CountSort::operator[](unsigned int n) const {
     if (size_ == 0) {
         std::string msg = "Attempt to access empty object";
         throw std::out_of_range(msg);
@@ -84,7 +84,7 @@ unsigned int CountSort::width() const {
     return width_;
 }
 
-unsigned int CountSort::size() const {
+unsigned long CountSort::size() const {
     return size_;
 }
 
@@ -127,7 +127,7 @@ int CountSort::Iterator::operator*() const {
     return integer_index + parent->lower_bound_;
 }
 
-int CountSort::Iterator::operator[](difference_type n) const {
+int CountSort::Iterator::operator[](unsigned long n) const {
     if (n < 0 || n >= parent->size()) {
         std::string msg = std::to_string(n) + " is outside of allowable range [0-" + std::to_string(parent->size() - 1) + ']';
         throw std::invalid_argument(msg);
