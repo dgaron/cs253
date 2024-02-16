@@ -2,7 +2,7 @@
 #include <string>       // std::string, std::to_string()
 #include <initializer_list> // std::initializer_list
 #include <algorithm>    // std::min(), std::max(), std::fill(), std::copy()
-#include <iterator>     // std::advance(), std::distance()
+#include <iterator>     // std::advance()
 #include <ostream>      // std::ostream
 #include <limits>       // INT_MIN, INT_MAX
 #include "CountSort.h"
