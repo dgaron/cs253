@@ -69,8 +69,6 @@ unsigned int CountSort::calculate_width_(int lb, int ub) const {
     }
     unsigned int width = 0;
     __builtin_sub_overflow (ub, lb, &width);
-    // Alternative easier option. Unsure if there are any downsides.
-    // unsigned int width = static_cast<long>(ub) - lb + 1;
     return width + 1;
 }
 
