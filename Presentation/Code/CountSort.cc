@@ -68,7 +68,12 @@ unsigned int CountSort::calculate_width_(int lb, int ub) const {
         throw std::invalid_argument(msg);
     }
     unsigned int width = 0;
-    __builtin_sub_overflow (ub, lb, &width);
+    // Returns true in the case of an underflow
+    if (__builtin_sub_overflow (ub, lb, &width))  {
+        std::string msg = "Error constructing range using lower bound: " + std::to_string(lb) + " and upper bound: " + std::to_string(ub) + '\n';
+        msg += "Width is limited to " + std::to_string(UINT_MAX);
+        throw std::underflow_error(msg);
+    }
     return width + 1;
 }
 
