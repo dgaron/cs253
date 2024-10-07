@@ -12,9 +12,8 @@ class CountSort {
     CountSort(const std::initializer_list<int>);
     CountSort &operator=(const CountSort &);
     CountSort &operator=(const std::initializer_list<int>);
-    // Not implemented
-    // CountSort(CountSort &&);
-    // CountSort &operator=(const CountSort &&);
+    CountSort(CountSort &&);
+    CountSort &operator=(CountSort &&);
     ~CountSort();
 
     int operator()(int) const;
@@ -40,7 +39,9 @@ class CountSort {
         Iterator();
         Iterator(const CountSort *, unsigned int ii = 0);
         Iterator(const Iterator &) = default;
+        Iterator(Iterator &&) = default;
         Iterator &operator=(const Iterator &) = default;
+        Iterator &operator=(Iterator &&) = default;
         ~Iterator() = default;
 
         int operator*() const;

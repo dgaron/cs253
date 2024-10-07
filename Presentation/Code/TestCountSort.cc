@@ -55,6 +55,19 @@ void test_copy_constructor() {
     cout << "------------------------------------------------------------------------\n";
 }
 
+void test_move_constructor() {
+    cout << "Testing CountSort move constructor" << '\n';
+    CountSort cs1(0, 99);
+    cs1 = {99, 99, 99};
+    CountSort cs2 = std::move(cs1);
+    cout << "Successfully moved CountSort object:" << '\n';
+    assert(cs1.empty());
+    cout << "cs2: " << cs2  << '\n';
+    cout << "cs1.size() expected return: 0 -- actual: " << cs1.size() << '\n';
+    cout << "cs2.size() expected return: 3 -- actual: " << cs2.size() << '\n';
+    cout << "------------------------------------------------------------------------\n";
+}
+
 void test_get_min_max() {
     CountSort cs(0, 99);
     cout << "Testing min()" << '\n';
@@ -150,6 +163,23 @@ void test_assignment_operator_cs() {
     cout << "cs2: " << cs2 << '\n';
     assert(cs1.size() == cs2.size());
     cout << "cs1.size() expected return: 3 -- actual: " << cs1.size() << '\n';
+    cout << "cs2.size() expected return: 3 -- actual: " << cs2.size() << '\n';
+    cout << "------------------------------------------------------------------------\n";
+}
+
+void test_move_assignment_operator() {
+    cout << "Testing CountSort Move assignment operator" << '\n';
+    CountSort cs1(0, 99);
+    cs1 = {99, 99, 99};
+    CountSort cs2(0, 99);
+    cs2 = {99, 99, 99};
+    cout << "cs1: " << cs1  << '\n';
+    cout << "cs2: " << cs2  << '\n';
+    cs2 = std::move(cs1);
+    cout << "Successfully move assigned CountSort object:" << '\n';
+    assert(cs1.empty());
+    cout << "cs2: " << cs2  << '\n';
+    cout << "cs1.size() expected return: 0 -- actual: " << cs1.size() << '\n';
     cout << "cs2.size() expected return: 3 -- actual: " << cs2.size() << '\n';
     cout << "------------------------------------------------------------------------\n";
 }
@@ -459,6 +489,9 @@ int main() {
     test_iterator_add_subtract();
     test_iterator_subscript();
     test_iterator_difference();
+
+    test_move_constructor();
+    test_move_assignment_operator();
 
     cout << "All tests completed successfully" << '\n';
 

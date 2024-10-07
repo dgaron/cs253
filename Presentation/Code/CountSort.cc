@@ -7,6 +7,8 @@
 #include <limits>       // INT_MIN, INT_MAX
 #include "CountSort.h"
 
+#include <iostream>
+
 CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(calculate_width_(lb, ub)) {
     if (upper_bound_ < lower_bound_) {
         std::string msg = "Invalid range: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
@@ -17,6 +19,15 @@ CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width
 
 CountSort::CountSort(const CountSort &rhs) : CountSort(rhs.min(), rhs.max()) {
     *this = rhs;
+}
+
+CountSort::CountSort(CountSort &&rhs) 
+        : lower_bound_(rhs.min()), upper_bound_(rhs.max()), width_(calculate_width_(rhs.min(), rhs.max())) {
+    numbers_ = rhs.numbers_;
+    size_  = rhs.size();
+
+    rhs.numbers_ = nullptr;
+    rhs.size_ = 0;
 }
 
 CountSort::CountSort(const std::initializer_list<int> il) : CountSort(std::min(il), std::max(il)) {
@@ -31,6 +42,22 @@ CountSort &CountSort::operator=(const CountSort &rhs) {
     }
     size_ = rhs.size();
     std::copy(rhs.numbers_, rhs.numbers_ + width_, numbers_);
+    return *this;
+}
+
+CountSort &CountSort::operator=(CountSort &&rhs) {
+    if (lower_bound_ != rhs.min() || upper_bound_ != rhs.max()) {
+        std::string msg = "Object with bounds: [" + std::to_string(rhs.min()) + " - " + std::to_string(rhs.max()) + ']';
+        msg += " cannot be assigned to object with bounds: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
+        throw std::range_error(msg);
+    }
+    delete[] numbers_;
+    numbers_ = rhs.numbers_;
+    size_ = rhs.size();
+    
+    rhs.numbers_ = nullptr;
+    rhs.size_ = 0;
+
     return *this;
 }
 
