@@ -20,7 +20,7 @@ CountSort::CountSort(const CountSort &rhs) : CountSort(rhs.min(), rhs.max()) {
 }
 
 CountSort::CountSort(CountSort &&rhs) 
-        : lower_bound_(rhs.min()), upper_bound_(rhs.max()), width_(calculate_width_(rhs.min(), rhs.max())) {
+        : lower_bound_(rhs.min()), upper_bound_(rhs.max()), width_(rhs.width()) noexcept {
     numbers_ = rhs.numbers_;
     size_  = rhs.size();
 

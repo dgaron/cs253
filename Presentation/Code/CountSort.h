@@ -12,7 +12,7 @@ class CountSort {
     CountSort(const std::initializer_list<int>);
     CountSort &operator=(const CountSort &);
     CountSort &operator=(const std::initializer_list<int>);
-    CountSort(CountSort &&);
+    CountSort(CountSort &&) noexcept;
     CountSort &operator=(CountSort &&);
     ~CountSort();
 
