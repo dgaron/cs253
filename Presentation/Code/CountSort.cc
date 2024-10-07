@@ -7,8 +7,6 @@
 #include <limits>       // INT_MIN, INT_MAX
 #include "CountSort.h"
 
-#include <iostream>
-
 CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(calculate_width_(lb, ub)) {
     if (upper_bound_ < lower_bound_) {
         std::string msg = "Invalid range: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
@@ -75,6 +73,7 @@ CountSort &CountSort::operator=(const std::initializer_list<int> il) {
 
 CountSort::~CountSort() {
     delete[] numbers_;
+    numbers_ = nullptr;
 }
 
 void CountSort::check_range_(int n, int lower, int upper) const {
