@@ -55,7 +55,7 @@ int main() {
     // Now contains 11×1, 13×2, 15×10⁴ 17×3, 19×4.
     assert(cs.size() == 10'010);
  
-    CountSort::iterator it = cs.begin();
+    CountSort::Iterator it = cs.begin();
     assert(*it == 11);
     assert(*it == 11);
     assert(*it == 11);

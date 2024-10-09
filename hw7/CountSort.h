@@ -43,6 +43,8 @@ class CountSort {
     // Constructor
     // throws invalid_argument
     CountSort(int lower_bound = 0, int upper_bound = 99);
+    // Delete copy constructor
+    CountSort(const CountSort&) = delete;
     // Initializer list assignment operator
     CountSort &operator =(const std::initializer_list<int> &);
     // Destructor
