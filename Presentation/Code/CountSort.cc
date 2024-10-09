@@ -19,8 +19,8 @@ CountSort::CountSort(const CountSort &rhs) : CountSort(rhs.min(), rhs.max()) {
     *this = rhs;
 }
 
-CountSort::CountSort(CountSort &&rhs) 
-        : lower_bound_(rhs.min()), upper_bound_(rhs.max()), width_(rhs.width()) noexcept {
+CountSort::CountSort(CountSort &&rhs) noexcept
+        : lower_bound_(rhs.min()), upper_bound_(rhs.max()), width_(rhs.width()) {
     numbers_ = rhs.numbers_;
     size_  = rhs.size();
 
@@ -44,6 +44,9 @@ CountSort &CountSort::operator=(const CountSort &rhs) {
 }
 
 CountSort &CountSort::operator=(CountSort &&rhs) {
+    if (this == &rhs) {
+        return *this;
+    }
     if (lower_bound_ != rhs.min() || upper_bound_ != rhs.max()) {
         std::string msg = "Object with bounds: [" + std::to_string(rhs.min()) + " - " + std::to_string(rhs.max()) + ']';
         msg += " cannot be assigned to object with bounds: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
