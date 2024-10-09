@@ -16,6 +16,8 @@ CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width
 }
 
 CountSort::CountSort(const CountSort &rhs) : CountSort(rhs.min(), rhs.max()) {
+    size_ = rhs.size();
+    std::copy(rhs.numbers_, rhs.numbers_ + width_, numbers_);
     *this = rhs;
 }
 
@@ -29,7 +31,9 @@ CountSort::CountSort(CountSort &&rhs) noexcept
 }
 
 CountSort::CountSort(const std::initializer_list<int> il) : CountSort(std::min(il), std::max(il)) {
-    *this = il;
+    for (auto n : il) {
+        insert(n);
+    }
 }
 
 CountSort &CountSort::operator=(const CountSort &rhs) {
@@ -76,7 +80,6 @@ CountSort &CountSort::operator=(const std::initializer_list<int> il) {
 
 CountSort::~CountSort() {
     delete[] numbers_;
-    numbers_ = nullptr;
 }
 
 void CountSort::check_range_(int n, int lower, int upper) const {
