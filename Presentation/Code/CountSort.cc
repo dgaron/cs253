@@ -37,6 +37,9 @@ CountSort::CountSort(const std::initializer_list<int> il) : CountSort(std::min(i
 }
 
 CountSort &CountSort::operator=(const CountSort &rhs) {
+    if (this == &rhs) {
+        return *this;
+    }
     if (lower_bound_ != rhs.min() || upper_bound_ != rhs.max()) {
         std::string msg = "Object with bounds: [" + std::to_string(rhs.min()) + " - " + std::to_string(rhs.max()) + ']';
         msg += " cannot be assigned to object with bounds: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
