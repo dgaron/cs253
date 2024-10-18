@@ -36,16 +36,15 @@ CountSort::CountSort(const std::initializer_list<int> il) : CountSort(std::min(i
 }
 
 CountSort &CountSort::operator=(const CountSort &rhs) {
-    if (this == &rhs) {
-        return *this;
+    if (this != &rhs) {
+        if (lower_bound_ != rhs.min() || upper_bound_ != rhs.max()) {
+            std::string msg = "Object with bounds: [" + std::to_string(rhs.min()) + " - " + std::to_string(rhs.max()) + ']';
+            msg += " cannot be assigned to object with bounds: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
+            throw std::range_error(msg);
+        }
+        size_ = rhs.size();
+        std::copy(rhs.numbers_, rhs.numbers_ + width_, numbers_);
     }
-    if (lower_bound_ != rhs.min() || upper_bound_ != rhs.max()) {
-        std::string msg = "Object with bounds: [" + std::to_string(rhs.min()) + " - " + std::to_string(rhs.max()) + ']';
-        msg += " cannot be assigned to object with bounds: [" + std::to_string(lower_bound_) + " - " + std::to_string(upper_bound_) + ']';
-        throw std::range_error(msg);
-    }
-    size_ = rhs.size();
-    std::copy(rhs.numbers_, rhs.numbers_ + width_, numbers_);
     return *this;
 }
 
