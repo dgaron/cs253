@@ -21,3 +21,6 @@
 
 # Makefiles
 Makefile
+
+# Settings json
+settings.json
