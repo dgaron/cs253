@@ -4,7 +4,7 @@
 #include <algorithm>    // std::min(), std::max(), std::fill(), std::copy()
 #include <iterator>     // std::advance()
 #include <ostream>      // std::ostream
-#include <limits>       // INT_MIN, INT_MAX
+#include <climits>       // INT_MIN, INT_MAX
 #include "CountSort.h"
 
 CountSort::CountSort(int lb, int ub) : lower_bound_(lb), upper_bound_(ub), width_(calculate_width_(lb, ub)) {
@@ -97,14 +97,19 @@ unsigned int CountSort::calculate_width_(int lb, int ub) const {
         msg += "Width is limited to " + std::to_string(UINT_MAX);
         throw std::invalid_argument(msg);
     }
-    unsigned int width = 0;
-    // Returns true in the case of an underflow
-    if (__builtin_sub_overflow (ub, lb, &width))  {
-        std::string msg = "Error constructing range using lower bound: " + std::to_string(lb) + " and upper bound: " + std::to_string(ub) + '\n';
-        msg += "Width is limited to " + std::to_string(UINT_MAX);
-        throw std::underflow_error(msg);
-    }
-    return width + 1;
+    unsigned int width = static_cast<unsigned int>(ub) - lb + 1;
+
+    // unsigned int width = 0;
+    // Returns true in the case of an overflow
+        // I think this is unreachable because of previous check
+    // if (__builtin_sub_overflow (ub, lb, &width))  {
+    //     std::string msg = "Error constructing range using lower bound: " + std::to_string(lb) + " and upper bound: " + std::to_string(ub) + '\n';
+    //     msg += "Width is limited to " + std::to_string(UINT_MAX);
+    //     throw std::overflow_error(msg);
+    // }
+    // return width + 1;
+
+    return width;
 }
 
 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cassert>  // assert()
-#include <limits>   // UINT_MAX, ULONG_MAX
+#include <climits>   // UINT_MAX, ULONG_MAX
 #include "CountSort.h"
 
 using namespace std;
