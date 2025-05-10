@@ -65,9 +65,8 @@ CountSort &CountSort::operator=(CountSort &&rhs) {
 }
 
 CountSort &CountSort::operator=(const std::initializer_list<int> il) {
-    auto lowest = std::min(il);
+    auto [lowest, highest] = std::minmax(il);
     check_range_(lowest, lower_bound_, upper_bound_);
-    auto highest = std::max(il);
     check_range_(highest, lower_bound_, upper_bound_);
     clear();
     for (auto n : il) {
